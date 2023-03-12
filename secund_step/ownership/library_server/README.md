@@ -1,6 +1,8 @@
-- escrever um api que recebe livros e adiciona em uma biblioteca
-- usar queues/channels para receber os livros
-- usar tokio + hyper
+# Library Server v1
+
+- Escrever um api que recebe livros e adiciona em uma biblioteca
+- Usar queues/channels para receber os livros
+- Usar tokio + hyper
 
 A ideia aqui é escrever um CRUD básico no padrão REST API.
 
@@ -34,3 +36,13 @@ A ideia aqui é escrever um CRUD básico no padrão REST API.
     2. executa a ação de acordo com o req_type do RequestBook
 
 ![](./diagram.png)
+
+
+
+# ~~Library~~ Wasm Server v2
+
+- Agora ao inves de `Book` o server deve salvar um `.wasm` como um struct `Wasm`
+- Os arquivos devem ser salvos em disco (DB)
+- O DB deve ser embarcado com a aplicação
+- O server deve poder executar o código desse arquivo `.wasm` salvo.
+
