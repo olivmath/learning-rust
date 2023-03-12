@@ -1,5 +1,5 @@
 use lazy_static::lazy_static;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::{
     collections::HashMap,
     sync::{Arc, Mutex},
@@ -9,7 +9,7 @@ lazy_static! {
     static ref DB: Arc<Mutex<HashMap<String, Wasm>>> = Arc::new(Mutex::new(HashMap::new()));
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Wasm {
     pub name: String,
     pub id: String,
@@ -20,13 +20,28 @@ pub struct Wasm {
 
 impl Wasm {
     pub fn new(name: String, id: String, file: Vec<u8>, main_function: String) -> Wasm {
+        let size = file.len();
         Wasm {
             name,
             id,
             file,
-            size: file.len(),
+            size,
             main_function,
         }
+    }
+
+    pub fn default() -> Wasm {
+        Wasm {
+            name: "".into(),
+            id: "".into(),
+            file: "".into(),
+            size: 0,
+            main_function: "".into(),
+        }
+    }
+
+    pub fn cloned_id(&self) -> String {
+        self.id.clone()
     }
 }
 
@@ -56,11 +71,11 @@ impl Storage {
     }
 
     pub fn add_wasm(&mut self, wasm: Wasm) -> Option<Wasm> {
-        self.wasms.lock().unwrap().insert(wasm.id, wasm)
+        self.wasms.lock().unwrap().insert(wasm.cloned_id(), wasm)
     }
 
     pub fn modify_wasm(&mut self, wasm: Wasm) -> Option<Wasm> {
-        self.wasms.lock().unwrap().insert(wasm.id, wasm)
+        self.wasms.lock().unwrap().insert(wasm.cloned_id(), wasm)
     }
 
     pub fn remove_wasm(&mut self, id: String) -> Option<Wasm> {

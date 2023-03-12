@@ -4,7 +4,7 @@ import aiohttp
 import time
 
 async def send_requests():
-    url = 'http://127.0.0.1:3000/book'
+    url = 'http://127.0.0.1:3000/wasm'
     headers = {'Content-Type': 'application/json'}
     total_requests = 10000
     success_requests = 0
@@ -25,13 +25,13 @@ async def send_requests():
         print(f"🚀 Taxa de requests por segundo: {requests_per_second:.2f}")
         
         # Verificar se todos os livros foram salvos
-        all_books = requests.get(url).json()
-        num_books_created = len(all_books)
-        if num_books_created == total_requests:
+        all_wasms = requests.get(url).json()
+        num_wasms_created = len(all_wasms)
+        if num_wasms_created == total_requests:
             print("📚 Todos os livros foram salvos!")
         else:
-            num_books_missing = total_requests - num_books_created
-            print(f"❗️ {num_books_missing} livros não foram salvos.")
+            num_wasms_missing = total_requests - num_wasms_created
+            print(f"❗️ {num_wasms_missing} livros não foram salvos.")
         
 # Cria um loop de eventos e executa a função send_requests
 loop = asyncio.get_event_loop()

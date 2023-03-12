@@ -1,33 +1,32 @@
-use super::book::Library;
-use super::server::{RequestBook, RequestType};
+use crate::wasm::Storage;
+
+use super::server::request::{RequestType, RequestWasm};
 use tokio::sync::mpsc::Receiver;
 
 pub struct Runner {
-    rx: Receiver<RequestBook>,
-    library: Library,
+    rx: Receiver<RequestWasm>,
+    storage: Storage,
 }
 
 impl Runner {
-    pub fn new(rx: Receiver<RequestBook>) -> Self {
+    pub fn new(rx: Receiver<RequestWasm>) -> Self {
         Runner {
             rx,
-            library: Library::new(),
+            storage: Storage::new(),
         }
     }
 
     pub async fn run(&mut self) {
-        while let Some(req_book) = self.rx.recv().await {
-            match req_book.req_type {
+        while let Some(req_wasm) = self.rx.recv().await {
+            match req_wasm.req_type {
                 RequestType::SAVE => {
-                    self.library
-                        .add_book(req_book.cloned_id(), req_book.cloned_book());
+                    self.storage.add_wasm(req_wasm.cloned_wasm());
                 }
                 RequestType::MODIFY => {
-                    self.library
-                        .modify_book(req_book.cloned_id(), req_book.cloned_book());
+                    self.storage.modify_wasm(req_wasm.cloned_wasm());
                 }
                 RequestType::DELETE => {
-                    self.library.remove_book(req_book.cloned_id());
+                    self.storage.remove_wasm(req_wasm.cloned_id());
                 }
             }
         }

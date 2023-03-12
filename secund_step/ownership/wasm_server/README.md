@@ -12,28 +12,28 @@ A ideia aqui é escrever um CRUD básico no padrão REST API.
 4. quando um request chega no server
 5. o request é mandado para o handler
 6. o handler analiza o tipo de request que pode ser
-   1. GET /books - precisa retornar todos os livros
-   2. POST /book - precisa adicionar um novo livro
-   3. PUT /book/{id} - precisa atualizar algum dado de um livro existente
-   4. DELETE /book/{id} - precisa apagar um livro existente
+   1. GET /wasms - precisa retornar todos os livros
+   2. POST /wasm - precisa adicionar um novo livro
+   3. PUT /wasm/{id} - precisa atualizar algum dado de um livro existente
+   4. DELETE /wasm/{id} - precisa apagar um livro existente
 7. então o handler envia a request para a function responsavel
-8. se a request for um GET /books é retornado um Vec<Books> ordenado pelo year dos Books
-   1. um Book é um dado que contem 2 informações 1. title: String 2. year: u16
-   2. o Vec<Book> é obtido pela leitura do Libray que é um HashMap de Books
+8. se a request for um GET /wasms é retornado um Vec<wasms> ordenado pelo year dos wasms
+   1. um wasm é um dado que contem 2 informações 1. title: String 2. year: u16
+   2. o Vec<wasm> é obtido pela leitura do Libray que é um HashMap de wasms
 9. se a request não for o GET então
-10. a function resposavel deserializa de json para o struct RequestBook
-    1. RequestBook é um struct que contem 3 informações
+10. a function resposavel deserializa de json para o struct RequestWasm
+    1. RequestWasm é um struct que contem 3 informações
         - title: String 
         - year: u16
         - req_type: RequestType
     2. RequestType é um enum do tipo
-        - SAVE: para um Book novo
-        - MODIFIER: para atualizar um Book existente
-        - DELETE: para remover um Book
-11. então a function coloca o RequestBook no channel tx
+        - SAVE: para um wasm novo
+        - MODIFIER: para atualizar um wasm existente
+        - DELETE: para remover um wasm
+11. então a function coloca o RequestWasm no channel tx
 12. O runner olha o channel rx
-    1. e pega o Book
-    2. executa a ação de acordo com o req_type do RequestBook
+    1. e pega o wasm
+    2. executa a ação de acordo com o req_type do RequestWasm
 
 ![](./diagram.png)
 
@@ -41,7 +41,7 @@ A ideia aqui é escrever um CRUD básico no padrão REST API.
 
 # ~~Library~~ Wasm Server v2
 
-- Agora ao inves de `Book` o server deve salvar um `.wasm` como um struct `Wasm`
+- Agora ao inves de `wasm` o server deve salvar um `.wasm` como um struct `Wasm`
 - Os arquivos devem ser salvos em disco (DB)
 - O DB deve ser embarcado com a aplicação
 - O server deve poder executar o código desse arquivo `.wasm` salvo.

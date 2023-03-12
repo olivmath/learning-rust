@@ -1,26 +1,39 @@
-use super::super::book::{Library};
-use super::RequestBook;
-use hyper::{Body, Request, Response, StatusCode, Uri};
+use std::convert::Infallible;
+
+use super::request::RequestWasm;
+use hyper::{body::Buf, Body, Request, Response, StatusCode, Uri};
 use serde::{Deserialize, Serialize};
 use serde_json::Error;
-use std::convert::Infallible;
 use tokio::sync::mpsc::Sender;
 use uuid::Uuid;
-use hyper::body::Buf;
 
-async fn deserialize_type<T: for<'a> Deserialize<'a>>(req: Request<Body>) -> Result<T, Error> {
+pub fn invalid_wasm_response() -> Result<Response<Body>, Infallible> {
+    Ok(Response::builder()
+        .status(StatusCode::BAD_REQUEST)
+        .body("Invalid wasm".into())
+        .unwrap())
+}
+
+pub fn invalid_wasm_id_response() -> Result<Response<Body>, Infallible> {
+    Ok(Response::builder()
+        .status(StatusCode::BAD_REQUEST)
+        .body("Invalid wasm ID".into())
+        .unwrap())
+}
+
+pub async fn deserialize_type<T: for<'a> Deserialize<'a>>(req: Request<Body>) -> Result<T, Error> {
     let body = match hyper::body::aggregate(req.into_body()).await {
         Ok(body) => body,
-        Err(err) => panic!("Aggregate failed: {}", err)
+        Err(err) => panic!("Aggregate failed: {}", err),
     };
     let json = match serde_json::from_reader(body.reader()) {
         Ok(json) => json,
-        Err(err) => panic!("Aggregate failed: {}", err)
+        Err(err) => panic!("Aggregate failed: {}", err),
     };
     Ok(json)
 }
 
-fn to_response<T: Serialize>(res: T) -> Result<Response<Body>, Infallible> {
+pub fn to_response<T: Serialize>(res: T) -> Result<Response<Body>, Infallible> {
     let res = match serde_json::to_string(&res) {
         Ok(s) => s,
         Err(e) => {
@@ -43,13 +56,6 @@ pub async fn req_to_type<T: for<'a> Deserialize<'a>>(req: Request<Body>) -> Opti
     }
 }
 
-pub async fn root() -> Result<Response<Body>, Infallible> {
-    Ok(Response::builder()
-        .status(StatusCode::OK)
-        .body("🏛️ Welcome to the Library!".into())
-        .unwrap())
-}
-
 pub async fn not_found(msg: String) -> Result<Response<Body>, Infallible> {
     Ok(Response::builder()
         .status(StatusCode::NOT_FOUND)
@@ -57,9 +63,12 @@ pub async fn not_found(msg: String) -> Result<Response<Body>, Infallible> {
         .unwrap())
 }
 
-pub async fn send_to_runner(req_book: RequestBook, tx: Sender<RequestBook>) -> Result<Response<Body>, Infallible> {
-    tx.send(req_book.clone()).await.unwrap();
-    to_response(req_book.id)
+pub async fn send_to_runner(
+    req_wasm: RequestWasm,
+    tx: Sender<RequestWasm>,
+) -> Result<Response<Body>, Infallible> {
+    tx.send(req_wasm.clone()).await.unwrap();
+    to_response(req_wasm.id)
 }
 
 pub fn extract_id_from_url(uri: Uri) -> Option<Uuid> {
@@ -79,16 +88,7 @@ pub fn extract_id_from_url(uri: Uri) -> Option<Uuid> {
     id
 }
 
-pub async fn get_all_books() -> Result<Response<Body>, Infallible> {
-    let library = Library::new();
-    to_response(library.all_books())
-}
-
-pub async fn get_a_books(id: Uuid) -> Result<Response<Body>, Infallible> {
-    let library = Library::new();
-    if let Some(book) = library.get_book(id.to_string()) {
-        to_response(book)
-    } else {
-        not_found("Book not exist".into()).await
-    }
+pub fn clear_terminal_with(string: &str) {
+    print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
+    println!("{}", string);
 }
