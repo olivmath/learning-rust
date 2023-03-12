@@ -1,4 +1,4 @@
-use super::super::book::{Book, Library};
+use super::super::book::{Library};
 use super::RequestBook;
 use hyper::{Body, Request, Response, StatusCode, Uri};
 use serde::{Deserialize, Serialize};
@@ -6,11 +6,18 @@ use serde_json::Error;
 use std::convert::Infallible;
 use tokio::sync::mpsc::Sender;
 use uuid::Uuid;
+use hyper::body::Buf;
 
 async fn deserialize_type<T: for<'a> Deserialize<'a>>(req: Request<Body>) -> Result<T, Error> {
-    let body_bytes = hyper::body::to_bytes(req.into_body()).await.unwrap();
-    let body_str = String::from_utf8(body_bytes.to_vec()).unwrap();
-    serde_json::from_str(&body_str)
+    let body = match hyper::body::aggregate(req.into_body()).await {
+        Ok(body) => body,
+        Err(err) => panic!("Aggregate failed: {}", err)
+    };
+    let json = match serde_json::from_reader(body.reader()) {
+        Ok(json) => json,
+        Err(err) => panic!("Aggregate failed: {}", err)
+    };
+    Ok(json)
 }
 
 fn to_response<T: Serialize>(res: T) -> Result<Response<Body>, Infallible> {
