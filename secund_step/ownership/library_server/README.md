@@ -1,0 +1,36 @@
+- escrever um api que recebe livros e adiciona em uma biblioteca
+- usar queues/channels para receber os livros
+- usar tokio + hyper
+
+A ideia aqui é escrever um CRUD básico no padrão REST API.
+
+1. A aplicação inicia
+2. então 4 runners são criados, 1 para cada thread
+3. então o servidor é iniciado e espera por requests
+4. quando um request chega no server
+5. o request é mandado para o handler
+6. o handler analiza o tipo de request que pode ser
+    6.1 GET /books - precisa retornar todos os livros
+    6.2 POST /book - precisa adicionar um novo livro
+    6.3 PUT /book/{id} - precisa atualizar algum dado de um livro existente
+    6.4 DELETE /book/{id} - precisa apagar um livro existente
+7. então o handler envia a request para a function responsavel
+8. se a request for um GET /books é retornado um Vec<Books> ordenado pelo year dos Books
+    8.1 um Book é um dado que contem 2 informações
+        1. title: String
+        2. year: u16
+    8.2. o Vec<Book> é obtido pela leitura do Libray que é um HashMap de Books
+8. se a request não for o GET então
+9. a function resposavel deserializa de json para o struct RequestBook
+    8.1 RequestBook é um struct que contem 3 informações
+        1. title: String
+        2. year: u16
+        3. req_type: RequestType
+            3.1 RequestType é um enum do tipo
+                1. SAVE - para um Book novo
+                2. MODIFIER - para atualizar um Book existente
+                3. DELETE - para remover um Book
+9. então a function coloca o RequestBook no channel tx
+10. O runner olha o channel rx e pega o Book e executa a ação de acordo com o req_type do RequestBook
+
+![](./diagram.png)
