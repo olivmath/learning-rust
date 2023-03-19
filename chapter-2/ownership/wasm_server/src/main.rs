@@ -1,10 +1,10 @@
 mod adapter;
+mod domain;
 mod runner;
 mod server;
-mod wasm;
 
+use domain::job::WasmJob;
 use runner::Runner;
-use server::request::RequestWasm;
 use server::MyServer;
 use std::net::SocketAddr;
 use tokio::sync::mpsc;
@@ -13,7 +13,7 @@ use tokio::sync::mpsc;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // create channel
     // numero de itens no canal                                                             👇🏼
-    let (tx, rx) = mpsc::channel::<RequestWasm>(100);
+    let (tx, rx) = mpsc::channel::<WasmJob>(100);
 
     // create Runner
     let mut runner = Runner::new(rx);

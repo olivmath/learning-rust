@@ -3,9 +3,7 @@ pub mod request;
 mod response;
 mod utils;
 
-use crate::wasm::Wasm;
-
-use self::request::RequestWasm;
+use super::domain::job::WasmJob;
 use super::server::{handler::handler_routes, utils::clear_terminal_with};
 use hyper::service::{make_service_fn, service_fn};
 use hyper::Server;
@@ -22,7 +20,7 @@ impl MyServer {
         MyServer { addr }
     }
 
-    pub async fn run(self, tx: Sender<RequestWasm>) -> Result<(), Infallible> {
+    pub async fn run(self, tx: Sender<WasmJob>) -> Result<(), Infallible> {
         clear_terminal_with("🔗 Binding server in http://127.0.0.1:3000");
 
         let make_service = make_service_fn(move |_connection| {
