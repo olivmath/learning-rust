@@ -14,17 +14,30 @@
   - [x] Ownership
   - [x] [Exercises I](./chapter-2/ownership/exercicios/ex-01/src/main.rs)
   - [x] [Exercises II](./chapter-2/ownership/exercicios/ex-02/src/main.rs)
-- [ ] Chapter 3
+- [x] Chapter 3
   - [x] Welcome
   - [x] Structs
   - [x] Enums
   - [x] Methods
   - [x] Pattern Matching
-  - [x] Exercises
+  - [x] [Exercises I](./chapter-3/methods/exe-01/)
+  - [x] [Exercises II](./chapter-3/methods/exe-02/)
 - [ ] Chapter 4
-  - [ ] Control Flow
-  - [ ] Standard Library
-  - [ ] Modules
+  - [x] Control Flow
+    - [x] if and if let expression
+    - [x] while and while let expression
+    - [x] for expression
+    - [x] loop expression
+    - [x] match expression
+    - [x] break & continue
+  - [x] Standard Library
+    - [x] Option and Result
+    - [x] String
+    - [x] Vec
+    - [x] HashMap
+    - [x] Box
+    - [x] Rc
+  - [x] Modules
   - [ ] Exercises
 - [ ] Chapter 5
   - [ ] Welcome
