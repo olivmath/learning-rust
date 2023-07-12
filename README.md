@@ -38,7 +38,8 @@
     - [x] Box
     - [x] Rc
   - [x] Modules
-  - [ ] Exercises
+  - [x] [Exercises I](./chapter-4/exe-01/)
+  - [x] [Exercises II](./chapter-4/exe-02/)
 - [ ] Chapter 5
   - [ ] Welcome
   - [ ] Traits
