@@ -40,11 +40,11 @@
   - [x] Modules
   - [x] [Exercises I](./chapter-4/exe-01/)
   - [x] [Exercises II](./chapter-4/exe-02/)
-- [ ] Chapter 5
-  - [ ] Welcome
-  - [ ] Traits
-  - [ ] Generics
-  - [ ] Exercises
+- [x] Chapter 5
+  - [x] Welcome
+  - [x] Generics
+  - [x] Traits
+  - [x] [Exercises I](./chapter-5/exe-01/)
 - [ ] Chapter 6
   - [ ] Error Handling
   - [ ] Testing
