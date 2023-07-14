@@ -10,12 +10,23 @@
   - [x] [Exercises](./chapter-1/rustriz/src/domain/matrix.rs)
 - [x] Chapter 2
   - [x] Variables
+      - [x] type inference
+      - [x] static & const
+      - [x] scopes and shadowing
   - [x] Memory Management
+      - [x] stack vs heap
+      - [x] stack memory
+      - [x] manual memory menagement
+      - [x] scope-based memory menagement
+      - [x] garbage colletion
   - [x] Ownership
+      - [x] move semantics
+      - [x] copying and cloning
+      - [x] borrowing
+      - [x] lifetimes
   - [x] [Exercises I](./chapter-2/ownership/exercicios/ex-01/src/main.rs)
   - [x] [Exercises II](./chapter-2/ownership/exercicios/ex-02/src/main.rs)
 - [x] Chapter 3
-  - [x] Welcome
   - [x] Structs
   - [x] Enums
   - [x] Methods
@@ -41,22 +52,38 @@
   - [x] [Exercises I](./chapter-4/exe-01/)
   - [x] [Exercises II](./chapter-4/exe-02/)
 - [x] Chapter 5
-  - [x] Welcome
   - [x] Generics
   - [x] Traits
+    - [x] traits objects
+    - [x] deriving traits
+    - [x] default methods
+    - [x] traits bounds
+    - [x] impl traits
+  - [x] Important Traits
+    - [x] iterator
+    - [x] fromiterator
+    - [x] from and into
+    - [x] read and write
+    - [x] drop
+    - [x] default
+    - [x] operators: add, mul, ...
+    - [x] closures: Fn, FnMut, FnOnce
   - [x] [Exercises I](./chapter-5/exe-01/)
 - [ ] Chapter 6
   - [ ] Error Handling
   - [ ] Testing
   - [ ] Unsafe Rust
-  - [ ] Exercises
+  - [ ] Exercises I
 - [ ] Chapter 7
-  - [ ] Welcome
-  - [ ] Concurrency
-  - [ ] Exercises
-- [ ] Chapter 8
-  - [ ] Android
-  - [ ] Exercises
+  - [ ] Threads
+  - [ ] Channels
+  - [ ] Send and Sync
+  - [ ] Shared State
+  - [ ] Exercises I
+  - [ ] Async Basics
+  - [ ] Control Flow
+  - [ ] Pitfalls
+  - [ ] Exercises II
 
 ## First Step
 
