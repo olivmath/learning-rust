@@ -1,6 +1,4 @@
-# 📚 Learning
-
-## 0 - Global Step, [Comprehensive Rust](https://google.github.io/comprehensive-rust/)
+# 🦀 Learning [Comprehensive Rust Curso by Google](https://google.github.io/comprehensive-rust/)
 
 - [x] Chapter 1
   - [x] Welcome
