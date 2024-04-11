@@ -69,7 +69,7 @@
   - [x] [Exercises I](./chapter-5/exe-01/)
 - [ ] Chapter 6
   - [ ] Error Handling
-  - [ ] Testing
+  - [x] Testing
   - [ ] Unsafe Rust
   - [ ] Exercises I
 - [ ] Chapter 7
